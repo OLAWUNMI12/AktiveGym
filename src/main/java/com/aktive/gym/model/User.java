@@ -1,6 +1,7 @@
 package com.aktive.gym.model;
 
 
+import com.aktive.gym.util.constants.CommonConstants;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -27,17 +28,30 @@ public class User implements UserDetails {
     @Column(nullable = false)
     private Integer id;
 
-    @Column(nullable = false, name = "first_name")
-    private String firstName;
+    @Column(nullable = false, name = "membership_id")
+    private String membershipId;
 
-    @Column(nullable = false, name = "last_name")
-    private String lastName;
+    @Column(nullable = false, name = "full_name")
+    private String fullName;
 
     @Column(unique = true, length = 100, nullable = false)
     private String email;
 
+    @Enumerated(EnumType.STRING)
+    private CommonConstants.Gender gender;
+
+    private Long age;
+
     @Column(nullable = false)
     private String password;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false, name = "membership_plan")
+    private CommonConstants.MembershipPlan membershipPlan;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "fitness_and_body_info_id")
+    private FitnessAndBodyInfo fitnessAndBodyInfo;
 
     @CreationTimestamp
     @Column(updatable = false, name = "created_at")

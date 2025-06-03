@@ -1,6 +1,7 @@
 package com.aktive.gym.dto;
 
 
+import com.aktive.gym.util.constants.CommonConstants;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -14,9 +15,11 @@ import java.util.Date;
 @AllArgsConstructor
 public class UserDto {
 
-    private String firstName;
+    private String fullName;
 
-    private String lastName;
+    private String membershipId;
+
+    private CommonConstants.MembershipPlan membershipPlan;
 
     private String email;
 
