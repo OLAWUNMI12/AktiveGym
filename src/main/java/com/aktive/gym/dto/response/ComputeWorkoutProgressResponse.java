@@ -1,4 +1,4 @@
-package com.aktive.gym.dto;
+package com.aktive.gym.dto.response;
 
 import com.aktive.gym.util.constants.CommonConstants;
 import lombok.AllArgsConstructor;

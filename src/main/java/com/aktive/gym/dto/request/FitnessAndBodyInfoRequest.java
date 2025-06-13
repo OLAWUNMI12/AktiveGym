@@ -1,4 +1,4 @@
-package com.aktive.gym.dto;
+package com.aktive.gym.dto.request;
 
 
 import com.aktive.gym.util.constants.CommonConstants;
@@ -18,7 +18,7 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class FitnessAndBodyInfoDto {
+public class FitnessAndBodyInfoRequest {
 
     @NotNull(message = "Weight is mandatory")
     private Double weight;

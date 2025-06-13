@@ -1,7 +1,7 @@
 package com.aktive.gym.service;
 
 
-import com.aktive.gym.dto.UserDashboardResponse;
+import com.aktive.gym.dto.response.UserDashboardResponse;
 import com.aktive.gym.model.FitnessAndBodyInfo;
 import com.aktive.gym.model.User;
 import com.aktive.gym.model.UserExercises;

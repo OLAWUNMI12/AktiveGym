@@ -1,7 +1,8 @@
 package com.aktive.gym.service;
 
 
-import com.aktive.gym.dto.ComputeWorkoutProgressResponse;
+import com.aktive.gym.dto.response.ComputeWorkoutProgressResponse;
+import com.aktive.gym.dto.response.ExerciseResponse;
 import com.aktive.gym.model.User;
 import com.aktive.gym.model.UserExercises;
 import com.aktive.gym.repo.UserExerciseRepository;
@@ -229,6 +230,65 @@ public class WorkoutService {
             }
         }
         return fullBodyWorkout;
+    }
+
+
+
+    public Object getWorkoutPlan(String type){
+        User user = userService.getCurrentUser();
+        Optional<UserExercises> userExercisesOptional = userExerciseRepository.findByUsername(user.getUsername());
+        UserExercises userExercises = userExercisesOptional.orElse(UserExercises.builder().username(user.getUsername()).build());
+
+        CommonConstants.WorkoutPlan workoutPlan = CommonConstants.WorkoutPlan.valueOf(type);
+
+        return switch (workoutPlan) {
+            case FULL_BODY_WORKOUT -> getFullBodyWorkout(userExercises);
+            case CORE_AND_FAT_BURN_WORKOUT -> getCoreAndFatBurnWorkout(userExercises);
+            case UPPER_BODY_STRETCH_WORKOUT -> getUpperBodyStretchWorkout(userExercises);
+            case FULL_LEG_WORKOUT -> getFullLegWorkout(userExercises);
+            default -> null;
+        };
+    }
+
+
+    private ExerciseResponse.FullBodyWorkoutDto getFullBodyWorkout(UserExercises userExercises){
+        ExerciseResponse.FullBodyWorkoutDto fullBodyWorkout = new ExerciseResponse.FullBodyWorkoutDto();
+        fullBodyWorkout.setArmCircles(userExercises.isArmCircles());
+        fullBodyWorkout.setPikePushUp(userExercises.isPikePushUp());
+        fullBodyWorkout.setTableTopReversePike(userExercises.isTableTopReversePike());
+        fullBodyWorkout.setPlankBirdDog(userExercises.isPlankBirdDog());
+        fullBodyWorkout.setTouchAndHop(userExercises.isTouchAndHop());
+        return fullBodyWorkout;
+    }
+
+    private ExerciseResponse.CoreAndFatBurnWorkoutDto getCoreAndFatBurnWorkout(UserExercises userExercises){
+        ExerciseResponse.CoreAndFatBurnWorkoutDto coreAndFatBurnWorkout = new ExerciseResponse.CoreAndFatBurnWorkoutDto();
+        coreAndFatBurnWorkout.setCrunchChop(userExercises.isCrunchChop());
+        coreAndFatBurnWorkout.setMountainClimbers(userExercises.isMountainClimbers());
+        coreAndFatBurnWorkout.setFlutterKicks(userExercises.isFlutterKicks());
+        coreAndFatBurnWorkout.setFrogCrunches(userExercises.isFrogCrunches());
+        coreAndFatBurnWorkout.setPulseUp(userExercises.isPulseUp());
+        return coreAndFatBurnWorkout;
+    }
+
+    private ExerciseResponse.UpperBodyStretchWorkoutDto getUpperBodyStretchWorkout(UserExercises userExercises){
+        ExerciseResponse.UpperBodyStretchWorkoutDto upperBodyStretchWorkout = new ExerciseResponse.UpperBodyStretchWorkoutDto();
+        upperBodyStretchWorkout.setStaggeredArmPushUps(userExercises.isStaggeredArmPushUps());
+        upperBodyStretchWorkout.setSupermanTwist(userExercises.isSupermanTwist());
+        upperBodyStretchWorkout.setSpidermanPushUps(userExercises.isSpidermanPushUps());
+        upperBodyStretchWorkout.setStandingMountainClimbers(userExercises.isStandingMountainClimbers());
+        upperBodyStretchWorkout.setBoatTwist(userExercises.isBoatTwist());
+        return upperBodyStretchWorkout;
+    }
+
+    private ExerciseResponse.fullLegWorkoutDto getFullLegWorkout(UserExercises userExercises){
+        ExerciseResponse.fullLegWorkoutDto fullLegWorkout = new ExerciseResponse.fullLegWorkoutDto();
+        fullLegWorkout.setAnkleHops(userExercises.isAnkleHops());
+        fullLegWorkout.setCalfRaise(userExercises.isCalfRaise());
+        fullLegWorkout.setTheTouchAndHop(userExercises.isTheTouchAndHop());
+        fullLegWorkout.setBasketballShots(userExercises.isBasketballShots());
+        fullLegWorkout.setJumpRope(userExercises.isJumpRope());
+        return fullLegWorkout;
     }
 
 }

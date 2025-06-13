@@ -1,9 +1,9 @@
 package com.aktive.gym.service;
 
 
-import com.aktive.gym.dto.FitnessAndBodyInfoDto;
-import com.aktive.gym.dto.LoginDto;
-import com.aktive.gym.dto.RegisterUserDto;
+import com.aktive.gym.dto.request.FitnessAndBodyInfoRequest;
+import com.aktive.gym.dto.request.LoginRequest;
+import com.aktive.gym.dto.request.RegisterUserRequest;
 import com.aktive.gym.dto.UserDto;
 import com.aktive.gym.model.FitnessAndBodyInfo;
 import com.aktive.gym.model.User;
@@ -37,7 +37,7 @@ public class AuthenticationService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    public UserDto signup(RegisterUserDto input) throws BadRequestException {
+    public UserDto signup(RegisterUserRequest input) throws BadRequestException {
         if (userRepository.findByEmail(input.getEmail()).isPresent()) {
             throw new BadRequestException("email already taken");
         }
@@ -56,7 +56,7 @@ public class AuthenticationService {
                 .password(passwordEncoder.encode(input.getPassword()))
                 .build();
 
-        FitnessAndBodyInfoDto fitnessAndBodyInfo = input.getFitnessAndBodyInfo();
+        FitnessAndBodyInfoRequest fitnessAndBodyInfo = input.getFitnessAndBodyInfo();
         double bmi = fitnessAndBodyInfo.getWeight() / (Math.pow(fitnessAndBodyInfo.getHeight(), 2));
         bmi = (double) Math.round(bmi * 100) / 100;
         FitnessAndBodyInfo fitnessAndBodyInfoEntity = FitnessAndBodyInfo.builder()
@@ -80,7 +80,7 @@ public class AuthenticationService {
                 .build();
     }
 
-    public User authenticate(LoginDto input) {
+    public User authenticate(LoginRequest input) {
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         input.getEmail(),

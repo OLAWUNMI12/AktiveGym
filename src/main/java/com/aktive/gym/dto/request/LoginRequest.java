@@ -1,4 +1,4 @@
-package com.aktive.gym.dto;
+package com.aktive.gym.dto.request;
 
 
 import lombok.AllArgsConstructor;
@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class LoginDto {
+public class LoginRequest {
 
     private String email;
 

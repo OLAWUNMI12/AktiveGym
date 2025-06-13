@@ -1,7 +1,7 @@
 package com.aktive.gym.controller;
 
 
-import com.aktive.gym.dto.UserDashboardResponse;
+import com.aktive.gym.dto.response.UserDashboardResponse;
 import com.aktive.gym.service.DashBoardService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

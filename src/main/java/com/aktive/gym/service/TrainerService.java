@@ -1,0 +1,71 @@
+package com.aktive.gym.service;
+
+
+import com.aktive.gym.dto.request.GetTrainerRequest;
+import com.aktive.gym.model.Trainer;
+import com.aktive.gym.model.User;
+import com.aktive.gym.repo.TrainerRepository;
+import com.aktive.gym.repo.UserRepository;
+import com.aktive.gym.service.pagination.CustomPage;
+import jakarta.persistence.EntityNotFoundException;
+import lombok.RequiredArgsConstructor;
+import org.apache.coyote.BadRequestException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
+
+import java.util.List;
+import java.util.Optional;
+
+@Service
+@RequiredArgsConstructor
+public class TrainerService {
+
+    private final TrainerRepository trainerRepository;
+    private final UserService userService;
+    private final UserRepository userRepository;
+
+    public CustomPage<Trainer> getTrainers(GetTrainerRequest getTrainerRequest){
+        Pageable pageable = PageRequest.of(getTrainerRequest.getPageNumber() - 1, getTrainerRequest.getPageSize());
+        Page<Trainer> trainerPage  = trainerRepository.searchTrainers(StringUtils.hasText(getTrainerRequest.getSearchQuery()) ? getTrainerRequest.getSearchQuery() : "", pageable);
+        return getTrainerResponseCustomPage(trainerPage.getContent(), trainerPage, getTrainerRequest);
+    }
+
+
+    private static CustomPage<Trainer> getTrainerResponseCustomPage(List<Trainer> trainers, Page trainersPage, GetTrainerRequest request) {
+        CustomPage<Trainer> customPage = new CustomPage<>();
+        customPage.setContent(trainers);
+        customPage.setPageNumber(trainersPage.getNumber() + 1);
+        customPage.setPageSize(trainersPage.getSize());
+        customPage.setTotalElements(trainersPage.getTotalElements());
+        customPage.setTotalPages(trainersPage.getTotalPages());
+        customPage.setLast(trainersPage.isLast());
+        customPage.setFirst(trainersPage.isFirst());
+        customPage.setEmpty(trainersPage.isEmpty());
+        return customPage;
+    }
+
+
+    public Trainer getTrainer(Long trainerId) throws BadRequestException {
+        Optional<Trainer> trainerOptional = trainerRepository.findById(trainerId);
+        if (trainerOptional.isEmpty()) {
+            throw new BadRequestException("Trainer not found");
+        }
+        return trainerOptional.get();
+    }
+
+    public List<Trainer> getTrainerRecommendation(){
+        return trainerRepository.searchRandomTrainers();
+    }
+
+
+    public void assignTrainer(Long trainerId){
+        Trainer trainer = trainerRepository.findById(trainerId).orElseThrow(() -> new EntityNotFoundException("Trainer not found"));
+        User currentUser = userService.getCurrentUser();
+        User user = userRepository.findById(currentUser.getId()).orElseThrow(() -> new EntityNotFoundException("User not found"));
+        user.setTrainer(trainer);
+        userRepository.save(user);
+    }
+}

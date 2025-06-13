@@ -66,4 +66,12 @@ public class CommonConstants {
             return value;
         }
     }
+
+
+    public enum WorkoutPlan {
+        FULL_BODY_WORKOUT,
+        CORE_AND_FAT_BURN_WORKOUT,
+        UPPER_BODY_STRETCH_WORKOUT,
+        FULL_LEG_WORKOUT
+    }
 }

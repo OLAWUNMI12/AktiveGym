@@ -2,9 +2,9 @@ package com.aktive.gym.controller;
 
 
 import com.aktive.gym.config.JwtService;
-import com.aktive.gym.dto.LoginDto;
-import com.aktive.gym.dto.LoginResponse;
-import com.aktive.gym.dto.RegisterUserDto;
+import com.aktive.gym.dto.request.LoginRequest;
+import com.aktive.gym.dto.response.LoginResponse;
+import com.aktive.gym.dto.request.RegisterUserRequest;
 import com.aktive.gym.dto.UserDto;
 import com.aktive.gym.model.User;
 import com.aktive.gym.service.AuthenticationService;
@@ -36,8 +36,8 @@ public class AuthenticationController {
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<UserDto> register(@Valid @RequestBody RegisterUserDto registerUserDto) throws BadRequestException {
-        UserDto registeredUser = authenticationService.signup(registerUserDto);
+    public ResponseEntity<UserDto> register(@Valid @RequestBody RegisterUserRequest registerUserRequest) throws BadRequestException {
+        UserDto registeredUser = authenticationService.signup(registerUserRequest);
         User user = new User();
         user.setEmail(registeredUser.getEmail());
         registeredUser.setToken(jwtService.generateToken(user));
@@ -45,7 +45,7 @@ public class AuthenticationController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<Object> authenticate(@RequestBody LoginDto loginUserDto) {
+    public ResponseEntity<Object> authenticate(@RequestBody LoginRequest loginUserDto) {
             User authenticatedUser = authenticationService.authenticate(loginUserDto);
 
             String jwtToken = jwtService.generateToken(authenticatedUser);

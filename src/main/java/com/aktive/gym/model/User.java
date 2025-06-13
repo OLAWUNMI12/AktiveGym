@@ -53,6 +53,10 @@ public class User implements UserDetails {
     @JoinColumn(name = "fitness_and_body_info_id")
     private FitnessAndBodyInfo fitnessAndBodyInfo;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "trainer_id")
+    private Trainer trainer;
+
     @CreationTimestamp
     @Column(updatable = false, name = "created_at")
     private Date createdAt;

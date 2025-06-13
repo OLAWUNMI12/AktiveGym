@@ -1,4 +1,4 @@
-package com.aktive.gym.dto;
+package com.aktive.gym.dto.request;
 
 import com.aktive.gym.util.constants.CommonConstants;
 import com.aktive.gym.validator.ValidEnum;
@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class RegisterUserDto {
+public class RegisterUserRequest {
 
     @NotBlank(message = "Full is mandatory")
     private String fullName;
@@ -40,6 +40,6 @@ public class RegisterUserDto {
     private String membershipPlan;
 
     @Valid
-    private FitnessAndBodyInfoDto fitnessAndBodyInfo;
+    private FitnessAndBodyInfoRequest fitnessAndBodyInfo;
 
 }

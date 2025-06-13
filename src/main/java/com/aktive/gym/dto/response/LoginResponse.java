@@ -1,4 +1,4 @@
-package com.aktive.gym.dto;
+package com.aktive.gym.dto.response;
 
 
 import lombok.AllArgsConstructor;
