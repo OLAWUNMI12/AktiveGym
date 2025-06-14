@@ -18,7 +18,7 @@ public interface TrainerRepository extends JpaRepository<Trainer, Long> {
     Page<Trainer> searchTrainers(@Param("searchQuery") String searchQuery,  Pageable pageable);
 
 
-    @Query("SELECT t FROM Trainer t  ORDER BY RAND() LIMIT 5")
+    @Query("SELECT t FROM Trainer t  ORDER BY RANDOM() LIMIT 5")
     List<Trainer> searchRandomTrainers();
 
 
