@@ -13,6 +13,7 @@ import lombok.NoArgsConstructor;
 public class ComputeWorkoutProgressResponse {
 
     private Integer workoutProgress;
+    private Double caloriesBurned;
     private CommonConstants.Excercises exercise;
     private Boolean flag;
 }

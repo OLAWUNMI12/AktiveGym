@@ -15,5 +15,6 @@ public class UserDashboardResponse {
     private Integer workoutProgress;
     private Double weight;
     private Double bmi;
+    private Double caloriesBurned;
 
 }

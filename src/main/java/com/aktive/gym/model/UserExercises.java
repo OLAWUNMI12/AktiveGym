@@ -37,6 +37,6 @@ public class UserExercises {
     private boolean basketballShots;
     private boolean jumpRope;
     private Integer workoutProgress;
-
-
+    private Double workoutMet;
+    private Double caloriesBurned;
 }

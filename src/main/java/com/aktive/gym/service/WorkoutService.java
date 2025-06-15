@@ -3,10 +3,14 @@ package com.aktive.gym.service;
 
 import com.aktive.gym.dto.response.ComputeWorkoutProgressResponse;
 import com.aktive.gym.dto.response.ExerciseResponse;
+import com.aktive.gym.model.FitnessAndBodyInfo;
 import com.aktive.gym.model.User;
 import com.aktive.gym.model.UserExercises;
 import com.aktive.gym.repo.UserExerciseRepository;
+import com.aktive.gym.repo.UserRepository;
 import com.aktive.gym.util.constants.CommonConstants;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -20,62 +24,74 @@ public class WorkoutService {
 
     private final UserExerciseRepository userExerciseRepository;
     private final UserService userService;
+    private final UserRepository userRepository;
 
     public ComputeWorkoutProgressResponse computeFullBodyWorkout(CommonConstants.Excercises excercise, Boolean value){
-        User user = userService.getCurrentUser();
+        User registeredUser = userService.getCurrentUser();
+        User user = userRepository.findByEmail(registeredUser.getEmail()).orElse(null);
+        FitnessAndBodyInfo fitnessAndBodyInfo = user.getFitnessAndBodyInfo();
+
         Optional<UserExercises> userExercisesOptional = userExerciseRepository.findByUsername(user.getUsername());
         UserExercises userExercises = userExercisesOptional.orElse(UserExercises.builder().username(user.getUsername()).build());
         int fullBodyWorkout = Objects.nonNull(userExercises.getWorkoutProgress()) ? userExercises.getWorkoutProgress() : 0;
+        double fullBodyWorkoutMet = Objects.nonNull(userExercises.getWorkoutMet()) ? userExercises.getWorkoutMet() : 0;
+        ExerciseMetricsResponse exerciseMetricsResponse = new ExerciseMetricsResponse(fullBodyWorkout, fullBodyWorkoutMet);
 
-        fullBodyWorkout = computeBodyWorkout(userExercises, excercise, fullBodyWorkout, value);
-        fullBodyWorkout = computeUpperBodyStretchWorkout(userExercises, excercise, fullBodyWorkout, value);
-        fullBodyWorkout = computeFullLegWorkout(userExercises, excercise, fullBodyWorkout, value);
-        fullBodyWorkout = computeCoreAndFatBurnWorkout(userExercises, excercise, fullBodyWorkout, value);
 
-        userExercises.setWorkoutProgress(fullBodyWorkout);
+        exerciseMetricsResponse = computeBodyWorkout(userExercises, excercise, exerciseMetricsResponse, value);
+        exerciseMetricsResponse = computeUpperBodyStretchWorkout(userExercises, excercise, exerciseMetricsResponse, value);
+        exerciseMetricsResponse = computeFullLegWorkout(userExercises, excercise, exerciseMetricsResponse, value);
+        exerciseMetricsResponse = computeCoreAndFatBurnWorkout(userExercises, excercise, exerciseMetricsResponse, value);
+
+        userExercises.setWorkoutMet(exerciseMetricsResponse.getWorkoutMet());
+        double caloriesBurned = exerciseMetricsResponse.getWorkoutMet() * fitnessAndBodyInfo.getWeight() * 0.0833;
+        caloriesBurned = (double) Math.round(caloriesBurned * 100) / 100;
+        userExercises.setCaloriesBurned(caloriesBurned);
+        userExercises.setWorkoutProgress(exerciseMetricsResponse.getWorkoutProgress());
         userExerciseRepository.save(userExercises);
         return ComputeWorkoutProgressResponse.builder()
-                .workoutProgress(fullBodyWorkout)
+                .workoutProgress(exerciseMetricsResponse.getWorkoutProgress())
+                .caloriesBurned(caloriesBurned)
                 .exercise(excercise)
                 .flag(value)
                 .build();
     }
 
-    private int computeBodyWorkout(UserExercises userExercises, CommonConstants.Excercises excercise, Integer fullBodyWorkout, boolean value){
+    private ExerciseMetricsResponse computeBodyWorkout(UserExercises userExercises, CommonConstants.Excercises excercise, ExerciseMetricsResponse exerciseMetricsResponse, boolean value){
 
         switch (excercise) {
             case ARM_CIRCLES:
                 if (userExercises.isArmCircles() != value) {
                     userExercises.setArmCircles(value);
-                    fullBodyWorkout = computeFullBodyWorkout(excercise, fullBodyWorkout, value);
+                    exerciseMetricsResponse = computeFullBodyWorkout(excercise, exerciseMetricsResponse, value);
                 }
                 break;
 
             case PIKE_PUSH_UP:
                 if (userExercises.isPikePushUp() != value) {
                     userExercises.setPikePushUp(value);
-                    fullBodyWorkout = computeFullBodyWorkout(excercise, fullBodyWorkout, value);
+                    exerciseMetricsResponse = computeFullBodyWorkout(excercise, exerciseMetricsResponse, value);
                 }
                 break;
 
             case TABLE_TOP_REVERSE_PIKE:
                 if (userExercises.isTableTopReversePike() != value) {
                     userExercises.setTableTopReversePike(value);
-                    fullBodyWorkout = computeFullBodyWorkout(excercise, fullBodyWorkout, value);
+                    exerciseMetricsResponse = computeFullBodyWorkout(excercise, exerciseMetricsResponse, value);
                 }
                 break;
 
             case PLANK_BIRD_DOG:
                 if (userExercises.isPlankBirdDog() != value) {
                     userExercises.setPlankBirdDog(value);
-                    fullBodyWorkout = computeFullBodyWorkout(excercise, fullBodyWorkout, value);
+                    exerciseMetricsResponse = computeFullBodyWorkout(excercise, exerciseMetricsResponse, value);
                 }
                 break;
 
             case TOUCH_AND_HOP:
                 if (userExercises.isTouchAndHop() != value) {
                     userExercises.setTouchAndHop(value);
-                    fullBodyWorkout = computeFullBodyWorkout(excercise, fullBodyWorkout, value);
+                    exerciseMetricsResponse = computeFullBodyWorkout(excercise, exerciseMetricsResponse, value);
                 }
                 break;
 
@@ -83,59 +99,59 @@ public class WorkoutService {
                 break;
         }
 
-        return fullBodyWorkout;
+        return exerciseMetricsResponse;
     }
 
-    private int computeCoreAndFatBurnWorkout(UserExercises userExercises, CommonConstants.Excercises excercise, Integer fullBodyWorkout, boolean value){
+    private ExerciseMetricsResponse computeCoreAndFatBurnWorkout(UserExercises userExercises, CommonConstants.Excercises excercise,  ExerciseMetricsResponse exerciseMetricsResponse, boolean value){
 
         switch (excercise) {
             case CRUNCH_CHOP:
                 if (userExercises.isCrunchChop() != value) {
                     userExercises.setCrunchChop(value);
-                    fullBodyWorkout = computeFullBodyWorkout(excercise, fullBodyWorkout, value);
+                    exerciseMetricsResponse = computeFullBodyWorkout(excercise, exerciseMetricsResponse, value);
                 }
                 break;
 
             case MOUNTAIN_CLIMBERS:
                 if (userExercises.isMountainClimbers() != value) {
                     userExercises.setMountainClimbers(value);
-                    fullBodyWorkout = computeFullBodyWorkout(excercise, fullBodyWorkout, value);
+                    exerciseMetricsResponse = computeFullBodyWorkout(excercise, exerciseMetricsResponse, value);
                 }
                 break;
 
             case FLUTTER_KICKS:
                 if (userExercises.isFlutterKicks() != value) {
                     userExercises.setFlutterKicks(value);
-                    fullBodyWorkout = computeFullBodyWorkout(excercise, fullBodyWorkout, value);
+                    exerciseMetricsResponse = computeFullBodyWorkout(excercise, exerciseMetricsResponse, value);
                 }
                 break;
 
             case FROG_CRUNCHES:
                 if (userExercises.isFrogCrunches() != value) {
                     userExercises.setFrogCrunches(value);
-                    fullBodyWorkout = computeFullBodyWorkout(excercise, fullBodyWorkout, value);
+                    exerciseMetricsResponse = computeFullBodyWorkout(excercise, exerciseMetricsResponse, value);
                 }
                 break;
 
             case PULSE_UP:
                 if (userExercises.isPulseUp() != value) {
                     userExercises.setPulseUp(value);
-                    fullBodyWorkout = computeFullBodyWorkout(excercise, fullBodyWorkout, value);
+                    exerciseMetricsResponse = computeFullBodyWorkout(excercise, exerciseMetricsResponse, value);
                 }
                 break;
 
             default:
                 break;
         }
-        return fullBodyWorkout;
+        return exerciseMetricsResponse;
     }
 
-    private int computeUpperBodyStretchWorkout(UserExercises userExercises, CommonConstants.Excercises excercise, Integer fullBodyWorkout, boolean value){
+    private ExerciseMetricsResponse computeUpperBodyStretchWorkout(UserExercises userExercises, CommonConstants.Excercises excercise, ExerciseMetricsResponse exerciseMetricsResponse, boolean value){
         switch (excercise) {
             case STAGGERED_ARM_PUSH_UPS:
                 if (userExercises.isStaggeredArmPushUps() != value) {
                     userExercises.setStaggeredArmPushUps(value);
-                    fullBodyWorkout = computeFullBodyWorkout(excercise, fullBodyWorkout, value);
+                    exerciseMetricsResponse = computeFullBodyWorkout(excercise, exerciseMetricsResponse, value);
                 }
                 break;
 
@@ -143,7 +159,7 @@ public class WorkoutService {
             case SUPERMAN_TWIST:
                 if (userExercises.isSupermanTwist() != value) {
                     userExercises.setSupermanTwist(value);
-                    fullBodyWorkout = computeFullBodyWorkout(excercise, fullBodyWorkout, value);
+                    exerciseMetricsResponse = computeFullBodyWorkout(excercise, exerciseMetricsResponse, value);
                 }
                 break;
 
@@ -151,7 +167,7 @@ public class WorkoutService {
             case SPIDERMAN_PUSH_UPS:
                 if (userExercises.isSpidermanPushUps() != value) {
                     userExercises.setSpidermanPushUps(value);
-                    fullBodyWorkout = computeFullBodyWorkout(excercise, fullBodyWorkout, value);
+                    exerciseMetricsResponse = computeFullBodyWorkout(excercise, exerciseMetricsResponse, value);
                 }
                 break;
 
@@ -159,7 +175,7 @@ public class WorkoutService {
             case STANDING_MOUNTAIN_CLIMBERS:
                 if (userExercises.isStandingMountainClimbers() != value) {
                     userExercises.setStandingMountainClimbers(value);
-                    fullBodyWorkout = computeFullBodyWorkout(excercise, fullBodyWorkout, value);
+                    exerciseMetricsResponse = computeFullBodyWorkout(excercise, exerciseMetricsResponse, value);
                 }
                 break;
 
@@ -167,7 +183,7 @@ public class WorkoutService {
             case BOAT_TWIST:
                 if (userExercises.isBoatTwist() != value) {
                     userExercises.setBoatTwist(value);
-                    fullBodyWorkout = computeFullBodyWorkout(excercise, fullBodyWorkout, value);
+                    exerciseMetricsResponse = computeFullBodyWorkout(excercise, exerciseMetricsResponse, value);
                 }
                 break;
 
@@ -175,61 +191,65 @@ public class WorkoutService {
                 break;
 
         }
-        return fullBodyWorkout;
+        return exerciseMetricsResponse;
     }
 
-    private int computeFullLegWorkout(UserExercises userExercises, CommonConstants.Excercises excercise, Integer fullBodyWorkout, boolean value){
+    private ExerciseMetricsResponse computeFullLegWorkout(UserExercises userExercises, CommonConstants.Excercises excercise, ExerciseMetricsResponse exerciseMetricsResponse, boolean value){
         switch (excercise) {
             case ANKLE_HOPS:
                 if (userExercises.isAnkleHops() != value) {
                     userExercises.setAnkleHops(value);
-                    fullBodyWorkout = computeFullBodyWorkout(excercise, fullBodyWorkout, value);
+                    exerciseMetricsResponse = computeFullBodyWorkout(excercise, exerciseMetricsResponse, value);
                 }
                 break;
 
             case CALF_RAISES:
                 if (userExercises.isCalfRaise() != value) {
                     userExercises.setCalfRaise(value);
-                    fullBodyWorkout = computeFullBodyWorkout(excercise, fullBodyWorkout, value);
+                    exerciseMetricsResponse = computeFullBodyWorkout(excercise, exerciseMetricsResponse, value);
                 }
                 break;
 
             case THE_TOUCH_AND_HOP:
                 if (userExercises.isTheTouchAndHop() != value) {
                     userExercises.setTheTouchAndHop(value);
-                    fullBodyWorkout = computeFullBodyWorkout(excercise, fullBodyWorkout, value);
+                    exerciseMetricsResponse = computeFullBodyWorkout(excercise, exerciseMetricsResponse, value);
                 }
                 break;
 
             case BASKETBALL_SHOTS:
                 if (userExercises.isBasketballShots() != value) {
                     userExercises.setBasketballShots(value);
-                    fullBodyWorkout = computeFullBodyWorkout(excercise, fullBodyWorkout, value);
+                    exerciseMetricsResponse = computeFullBodyWorkout(excercise, exerciseMetricsResponse, value);
                 }
                 break;
 
             case JUMP_ROPE:
                 if (userExercises.isJumpRope() != value) {
                     userExercises.setJumpRope(value);
-                    fullBodyWorkout = computeFullBodyWorkout(excercise, fullBodyWorkout, value);
+                    exerciseMetricsResponse = computeFullBodyWorkout(excercise, exerciseMetricsResponse, value);
                 }
                 break;
             default:
                 break;
         }
-        return fullBodyWorkout;
+        return exerciseMetricsResponse;
     }
 
 
-    public Integer computeFullBodyWorkout(CommonConstants.Excercises excercise, Integer fullBodyWorkout, Boolean flag){
+    public ExerciseMetricsResponse computeFullBodyWorkout(CommonConstants.Excercises excercise, ExerciseMetricsResponse exerciseMetricsResponse, Boolean flag){
+        Integer fullBodyWorkout = exerciseMetricsResponse.getWorkoutProgress();
+        Double fullBodyWorkoutMet = exerciseMetricsResponse.getWorkoutMet();
         if(fullBodyWorkout >= 0){
             if(Boolean.TRUE.equals(flag)){
                 fullBodyWorkout += excercise.getValue();
+                fullBodyWorkoutMet += excercise.getMET();
             }else {
                 fullBodyWorkout -= excercise.getValue();
+                fullBodyWorkoutMet -= excercise.getMET();
             }
         }
-        return fullBodyWorkout;
+        return new ExerciseMetricsResponse(fullBodyWorkout, fullBodyWorkoutMet);
     }
 
 
@@ -291,4 +311,12 @@ public class WorkoutService {
         return fullLegWorkout;
     }
 
+    @Data
+    @AllArgsConstructor
+    public class ExerciseMetricsResponse {
+        private Integer workoutProgress;
+        private Double workoutMet;
+    }
+
 }
+

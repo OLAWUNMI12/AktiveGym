@@ -10,6 +10,7 @@ com/aktive/gym/service/TokenBlacklistService.class
 com/aktive/gym/util/constants/CommonConstants$FitnessGoal.class
 com/aktive/gym/dto/response/LoginResponse$LoginResponseBuilder.class
 com/aktive/gym/controller/WorkoutController.class
+com/aktive/gym/service/WorkoutService$ExerciseMetricsResponse.class
 com/aktive/gym/dto/response/ExerciseResponse.class
 com/aktive/gym/model/UserExercises.class
 com/aktive/gym/dto/UserDto.class
