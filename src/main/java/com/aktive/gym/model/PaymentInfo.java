@@ -1,7 +1,6 @@
 package com.aktive.gym.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.*;
 
 @Table(name = "payment_info")
@@ -12,6 +11,11 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class PaymentInfo {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(nullable = false)
+    private Integer id;
+
     private String cardName;
     private String cardNumber;
     private String expiryDate;
