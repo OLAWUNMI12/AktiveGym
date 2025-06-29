@@ -3,9 +3,11 @@ package com.aktive.gym.service;
 
 import com.aktive.gym.dto.request.FitnessAndBodyInfoRequest;
 import com.aktive.gym.dto.request.LoginRequest;
+import com.aktive.gym.dto.request.PaymentInfoRequest;
 import com.aktive.gym.dto.request.RegisterUserRequest;
 import com.aktive.gym.dto.UserDto;
 import com.aktive.gym.model.FitnessAndBodyInfo;
+import com.aktive.gym.model.PaymentInfo;
 import com.aktive.gym.model.User;
 import com.aktive.gym.repo.UserRepository;
 import com.aktive.gym.util.constants.CommonConstants;
@@ -78,6 +80,15 @@ public class AuthenticationService {
                 .dietaryPreference(CommonConstants.DietaryPreference.valueOf(fitnessAndBodyInfo.getDietaryPreference()))
                 .build();
         user.setFitnessAndBodyInfo(fitnessAndBodyInfoEntity);
+
+        PaymentInfoRequest paymentInfoRequest = input.getPaymentInfo();
+        PaymentInfo paymentInfo = PaymentInfo.builder()
+                .cardName(paymentInfoRequest.getCardName())
+                .cardNumber(paymentInfoRequest.getCardNumber())
+                .expiryDate(paymentInfoRequest.getExpiryDate())
+                .cvv(paymentInfoRequest.getCvv())
+                .build();
+        user.setPaymentInfo(paymentInfo);
 
         User registeredUser = userRepository.save(user);
 

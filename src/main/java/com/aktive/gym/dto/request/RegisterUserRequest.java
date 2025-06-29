@@ -51,4 +51,7 @@ public class RegisterUserRequest {
     @Valid
     private FitnessAndBodyInfoRequest fitnessAndBodyInfo;
 
+    @Valid
+    private PaymentInfoRequest paymentInfo;
+
 }
