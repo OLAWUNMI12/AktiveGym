@@ -29,6 +29,7 @@ com/aktive/gym/model/User.class
 com/aktive/gym/dto/response/UserDashboardResponse.class
 com/aktive/gym/validator/ValidFitnessGoal.class
 com/aktive/gym/dto/request/RegisterUserRequest.class
+com/aktive/gym/dto/request/PaymentInfoRequest.class
 com/aktive/gym/repo/UserExerciseRepository.class
 com/aktive/gym/dto/response/UserResponse$UserResponseBuilder.class
 com/aktive/gym/dto/response/ExerciseResponse$fullLegWorkoutDto$fullLegWorkoutDtoBuilder.class
@@ -57,12 +58,14 @@ com/aktive/gym/validator/ValidEnum.class
 com/aktive/gym/dto/response/UserDashboardResponse$UserDashboardResponseBuilder.class
 com/aktive/gym/dto/request/RegisterUserRequest$RegisterUserRequestBuilder.class
 com/aktive/gym/util/constants/CommonConstants.class
+com/aktive/gym/model/PaymentInfo.class
 com/aktive/gym/exception/GlobalExceptionHandler.class
 com/aktive/gym/service/AuthenticationService.class
 com/aktive/gym/model/User$UserBuilder.class
 com/aktive/gym/dto/response/LoginResponse.class
 com/aktive/gym/config/JwtService.class
 com/aktive/gym/dto/response/ExerciseResponse$CoreAndFatBurnWorkoutDto$CoreAndFatBurnWorkoutDtoBuilder.class
+com/aktive/gym/dto/request/PaymentInfoRequest$PaymentInfoRequestBuilder.class
 com/aktive/gym/model/FitnessAndBodyInfo$FitnessAndBodyInfoBuilder.class
 com/aktive/gym/dto/request/LoginRequest.class
 com/aktive/gym/config/AppConfig.class
@@ -72,5 +75,6 @@ com/aktive/gym/util/constants/CommonConstants$DietaryPreference.class
 com/aktive/gym/controller/UserController.class
 com/aktive/gym/GymApplication.class
 com/aktive/gym/dto/response/ExerciseResponse$FullBodyWorkoutDto.class
+com/aktive/gym/model/PaymentInfo$PaymentInfoBuilder.class
 com/aktive/gym/validator/EnumValidator.class
 com/aktive/gym/service/TrainerService.class
