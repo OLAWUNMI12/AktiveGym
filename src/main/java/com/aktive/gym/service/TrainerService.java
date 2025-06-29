@@ -1,6 +1,7 @@
 package com.aktive.gym.service;
 
 
+import com.aktive.gym.dto.request.CreateTrainerRequest;
 import com.aktive.gym.dto.request.GetTrainerRequest;
 import com.aktive.gym.model.Trainer;
 import com.aktive.gym.model.User;
@@ -33,6 +34,18 @@ public class TrainerService {
         return getTrainerResponseCustomPage(trainerPage.getContent(), trainerPage, getTrainerRequest);
     }
 
+    public Trainer createTrainer(CreateTrainerRequest createTrainerRequest){
+        Trainer trainer = new Trainer();
+        trainer.setFullName(createTrainerRequest.getFullName());
+        trainer.setRole(createTrainerRequest.getRole());
+        trainer.setYearsOfExperience(createTrainerRequest.getYearsOfExperience());
+        trainer.setDescription(createTrainerRequest.getDescription());
+        trainer.setSpeciality(createTrainerRequest.getSpeciality());
+        trainer.setAvailablePeriod(createTrainerRequest.getAvailablePeriod());
+        trainer.setCertification(createTrainerRequest.getCertification());
+        trainer.setRating(createTrainerRequest.getRating());
+        return trainerRepository.save(trainer);
+    }
 
     private static CustomPage<Trainer> getTrainerResponseCustomPage(List<Trainer> trainers, Page trainersPage, GetTrainerRequest request) {
         CustomPage<Trainer> customPage = new CustomPage<>();

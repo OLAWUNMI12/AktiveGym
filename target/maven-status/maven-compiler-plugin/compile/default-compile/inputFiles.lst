@@ -10,14 +10,17 @@
 /Users/moshood.aniya/Documents/AktiveGym/src/main/java/com/aktive/gym/controller/UserController.java
 /Users/moshood.aniya/Documents/AktiveGym/src/main/java/com/aktive/gym/controller/WorkoutController.java
 /Users/moshood.aniya/Documents/AktiveGym/src/main/java/com/aktive/gym/dto/UserDto.java
+/Users/moshood.aniya/Documents/AktiveGym/src/main/java/com/aktive/gym/dto/request/CreateTrainerRequest.java
 /Users/moshood.aniya/Documents/AktiveGym/src/main/java/com/aktive/gym/dto/request/FitnessAndBodyInfoRequest.java
 /Users/moshood.aniya/Documents/AktiveGym/src/main/java/com/aktive/gym/dto/request/GetTrainerRequest.java
+/Users/moshood.aniya/Documents/AktiveGym/src/main/java/com/aktive/gym/dto/request/GetUsersRequest.java
 /Users/moshood.aniya/Documents/AktiveGym/src/main/java/com/aktive/gym/dto/request/LoginRequest.java
 /Users/moshood.aniya/Documents/AktiveGym/src/main/java/com/aktive/gym/dto/request/RegisterUserRequest.java
 /Users/moshood.aniya/Documents/AktiveGym/src/main/java/com/aktive/gym/dto/response/ComputeWorkoutProgressResponse.java
 /Users/moshood.aniya/Documents/AktiveGym/src/main/java/com/aktive/gym/dto/response/ExerciseResponse.java
 /Users/moshood.aniya/Documents/AktiveGym/src/main/java/com/aktive/gym/dto/response/LoginResponse.java
 /Users/moshood.aniya/Documents/AktiveGym/src/main/java/com/aktive/gym/dto/response/UserDashboardResponse.java
+/Users/moshood.aniya/Documents/AktiveGym/src/main/java/com/aktive/gym/dto/response/UserResponse.java
 /Users/moshood.aniya/Documents/AktiveGym/src/main/java/com/aktive/gym/exception/GlobalExceptionHandler.java
 /Users/moshood.aniya/Documents/AktiveGym/src/main/java/com/aktive/gym/model/FitnessAndBodyInfo.java
 /Users/moshood.aniya/Documents/AktiveGym/src/main/java/com/aktive/gym/model/Trainer.java
@@ -28,6 +31,7 @@
 /Users/moshood.aniya/Documents/AktiveGym/src/main/java/com/aktive/gym/repo/UserRepository.java
 /Users/moshood.aniya/Documents/AktiveGym/src/main/java/com/aktive/gym/service/AuthenticationService.java
 /Users/moshood.aniya/Documents/AktiveGym/src/main/java/com/aktive/gym/service/DashBoardService.java
+/Users/moshood.aniya/Documents/AktiveGym/src/main/java/com/aktive/gym/service/EmailService.java
 /Users/moshood.aniya/Documents/AktiveGym/src/main/java/com/aktive/gym/service/TokenBlacklistService.java
 /Users/moshood.aniya/Documents/AktiveGym/src/main/java/com/aktive/gym/service/TrainerService.java
 /Users/moshood.aniya/Documents/AktiveGym/src/main/java/com/aktive/gym/service/UserService.java

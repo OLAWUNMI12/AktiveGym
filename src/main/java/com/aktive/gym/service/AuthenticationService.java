@@ -9,12 +9,16 @@ import com.aktive.gym.model.FitnessAndBodyInfo;
 import com.aktive.gym.model.User;
 import com.aktive.gym.repo.UserRepository;
 import com.aktive.gym.util.constants.CommonConstants;
+import jakarta.mail.MessagingException;
 import org.apache.coyote.BadRequestException;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 
 @Service
@@ -27,14 +31,21 @@ public class AuthenticationService {
 
     private final AuthenticationManager authenticationManager;
 
+    private final EmailService emailService;
+
+    @Value("${login.url}")
+    private String loginUrl;
+
     public AuthenticationService(
             UserRepository userRepository,
             AuthenticationManager authenticationManager,
-            PasswordEncoder passwordEncoder
+            PasswordEncoder passwordEncoder,
+            EmailService emailService
     ) {
         this.authenticationManager = authenticationManager;
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
+        this.emailService = emailService;
     }
 
     public UserDto signup(RegisterUserRequest input) throws BadRequestException {
@@ -70,6 +81,8 @@ public class AuthenticationService {
 
         User registeredUser = userRepository.save(user);
 
+        sendWelcomeEmail(registeredUser);
+
         return UserDto.builder()
                 .email(registeredUser.getEmail())
                 .fullName(registeredUser.getFullName())
@@ -96,11 +109,24 @@ public class AuthenticationService {
         String membershipId = "";
 
         while (!canUseMemebershipId) {
-            int id = new Random().nextInt(90000);
+            int id = new Random().nextInt(99999);
             membershipId = String.valueOf(id);
             canUseMemebershipId = !userRepository.existsByMembershipId(membershipId);
         }
-        return membershipId;
+        return "AKG" +  membershipId;
+    }
+
+    private void sendWelcomeEmail(User user) {
+        Map<String, Object> params = new HashMap<>();
+        params.put("fullName", user.getFullName());
+        params.put("membershipId", user.getMembershipId());
+        params.put("loginUrl", loginUrl);
+
+        try {
+            emailService.sendMail(user.getEmail(), "Welcome to AktiveGym", params, "welcome");
+        } catch (MessagingException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 

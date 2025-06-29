@@ -1,6 +1,7 @@
 package com.aktive.gym.controller;
 
 
+import com.aktive.gym.dto.request.CreateTrainerRequest;
 import com.aktive.gym.dto.request.GetTrainerRequest;
 import com.aktive.gym.model.Trainer;
 import com.aktive.gym.service.TrainerService;
@@ -22,6 +23,11 @@ public class TrainersController {
     @GetMapping
     public ResponseEntity<CustomPage<Trainer>> getTrainers(GetTrainerRequest getTrainerRequest){
         return ResponseEntity.ok().body(trainerService.getTrainers(getTrainerRequest));
+    }
+
+    @PostMapping
+    public ResponseEntity<Trainer> createTrainer(CreateTrainerRequest createTrainerRequest){
+        return ResponseEntity.ok().body(trainerService.createTrainer(createTrainerRequest));
     }
 
     @GetMapping("/{trainerId}")
