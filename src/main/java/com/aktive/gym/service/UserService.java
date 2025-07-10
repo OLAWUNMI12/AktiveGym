@@ -21,6 +21,7 @@ import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -61,11 +62,14 @@ public class UserService implements UserDetailsService {
             userResponse.setGender(user.getGender());
             userResponse.setAge(user.getAge());
             userResponse.setStatus(user.getStatus());
-            TrainerResponse trainerResponse = new TrainerResponse();
-            trainerResponse.setId(user.getTrainer().getId());
-            trainerResponse.setFullName(user.getTrainer().getFullName());
-            userResponse.setTrainer(trainerResponse);
-            trainerResponse.setRole(user.getTrainer().getRole());
+            if(Objects.nonNull(user.getTrainer())) {
+                TrainerResponse trainerResponse = new TrainerResponse();
+                trainerResponse.setId(user.getTrainer().getId());
+                trainerResponse.setFullName(user.getTrainer().getFullName());
+                userResponse.setTrainer(trainerResponse);
+                trainerResponse.setRole(user.getTrainer().getRole());
+                usersResponses.add(userResponse);
+            }
             usersResponses.add(userResponse);
         }
 
