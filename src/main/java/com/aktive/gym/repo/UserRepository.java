@@ -15,7 +15,7 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     boolean existsByMembershipId(String membershipId);
 
 
-    @Query("SELECT u FROM User u WHERE" +
+    @Query("SELECT DISTINCT u FROM User u WHERE" +
             " (:searchQuery IS NULL OR  LOWER(u.fullName) LIKE LOWER(CONCAT('%', :searchQuery, '%')))  OR " +
             " (:searchQuery IS NULL OR  LOWER(u.email) LIKE LOWER(CONCAT('%', :searchQuery, '%'))) "
     )
