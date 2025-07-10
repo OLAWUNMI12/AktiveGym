@@ -40,7 +40,7 @@ public class EmailService {
         helper.addInline("bigLogo", bigLogo);
         helper.addInline("smallLogo", smallLogo);
 
-        helper.setFrom("alabijonathan600@gmail.com");
+        helper.setFrom("aktivegym01@gmail.com");
         mailSender.send(message);
     }
 

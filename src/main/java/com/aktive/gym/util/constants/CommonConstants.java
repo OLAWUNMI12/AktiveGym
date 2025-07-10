@@ -27,6 +27,12 @@ public class CommonConstants {
         NO_PREFERENCE
     }
 
+    public enum Category {
+        ALL,
+        NEW,
+        PAST
+    }
+
     public enum Excercises {
         // FULL BODY WORKOUT
         ARM_CIRCLES(5, 3),
@@ -77,5 +83,17 @@ public class CommonConstants {
         CORE_AND_FAT_BURN_WORKOUT,
         UPPER_BODY_STRETCH_WORKOUT,
         FULL_LEG_WORKOUT
+    }
+
+    public enum DietaryPlanType {
+        LOOSE_WEIGHT,
+        MAINTAIN_WEIGHT,
+        GAIN_WEIGHT
+    }
+
+    public enum FoodType
+    {
+        VEGAN,
+        NON_VEGAN
     }
 }

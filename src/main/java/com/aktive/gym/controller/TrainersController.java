@@ -26,7 +26,7 @@ public class TrainersController {
     }
 
     @PostMapping
-    public ResponseEntity<Trainer> createTrainer(CreateTrainerRequest createTrainerRequest){
+    public ResponseEntity<Trainer> createTrainer(@RequestBody  CreateTrainerRequest createTrainerRequest){
         return ResponseEntity.ok().body(trainerService.createTrainer(createTrainerRequest));
     }
 
@@ -44,6 +44,13 @@ public class TrainersController {
     @PutMapping("/assign")
     public ResponseEntity<Object> assignTrainer(@RequestParam Long trainerId)  {
         trainerService.assignTrainer(trainerId);
+        return ResponseEntity.ok().build();
+    }
+
+
+    @DeleteMapping("/{trainerId}")
+    public ResponseEntity<Object> deleteTrainer(@PathVariable Long trainerId) throws BadRequestException {
+        trainerService.deleteTrainer(trainerId);
         return ResponseEntity.ok().build();
     }
 }

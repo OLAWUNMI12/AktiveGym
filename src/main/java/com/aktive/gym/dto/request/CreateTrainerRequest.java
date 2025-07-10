@@ -27,4 +27,5 @@ public class CreateTrainerRequest {
     private String availablePeriod;
     private String certification;
     private double rating;
+    private String email;
 }

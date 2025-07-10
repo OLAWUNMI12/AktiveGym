@@ -1,10 +1,9 @@
 package com.aktive.gym.service;
 
 
-import com.aktive.gym.dto.request.GetTrainerRequest;
 import com.aktive.gym.dto.request.GetUsersRequest;
+import com.aktive.gym.dto.response.TrainerResponse;
 import com.aktive.gym.dto.response.UserResponse;
-import com.aktive.gym.model.Trainer;
 import com.aktive.gym.model.User;
 import com.aktive.gym.repo.UserRepository;
 import com.aktive.gym.service.pagination.CustomPage;
@@ -61,7 +60,12 @@ public class UserService implements UserDetailsService {
             userResponse.setDateJoined(user.getCreatedAt());
             userResponse.setGender(user.getGender());
             userResponse.setAge(user.getAge());
-            userResponse.setStatus("Active");
+            userResponse.setStatus(user.getStatus());
+            TrainerResponse trainerResponse = new TrainerResponse();
+            trainerResponse.setId(user.getTrainer().getId());
+            trainerResponse.setFullName(user.getTrainer().getFullName());
+            userResponse.setTrainer(trainerResponse);
+            trainerResponse.setRole(user.getTrainer().getRole());
             usersResponses.add(userResponse);
         }
 

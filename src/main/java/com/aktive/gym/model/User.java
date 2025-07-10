@@ -70,6 +70,9 @@ public class User implements UserDetails {
     @Column(name = "updated_at")
     private Date updatedAt;
 
+    @Column
+    private String status = "Active";
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of();

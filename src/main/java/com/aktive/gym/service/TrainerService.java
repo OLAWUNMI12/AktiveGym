@@ -17,6 +17,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,8 +32,13 @@ public class TrainerService {
 
     public CustomPage<Trainer> getTrainers(GetTrainerRequest getTrainerRequest){
         Pageable pageable = PageRequest.of(getTrainerRequest.getPageNumber() - 1, getTrainerRequest.getPageSize());
-        Page<Trainer> trainerPage  = trainerRepository.searchTrainers(StringUtils.hasText(getTrainerRequest.getSearchQuery()) ? getTrainerRequest.getSearchQuery() : "", pageable);
-        return getTrainerResponseCustomPage(trainerPage.getContent(), trainerPage, getTrainerRequest);
+        Date cutoffDate = java.sql.Date.valueOf(LocalDate.now().minusDays(3));
+        Page<Trainer> trainerPage  = trainerRepository.searchTrainers(
+                StringUtils.hasText(getTrainerRequest.getSearchQuery()) ? getTrainerRequest.getSearchQuery() : null,
+                StringUtils.hasText(getTrainerRequest.getCategory()) ? getTrainerRequest.getCategory() : null,
+                cutoffDate,
+                pageable);
+        return getTrainerResponseCustomPage(trainerPage.getContent(), trainerPage);
     }
 
     public Trainer createTrainer(CreateTrainerRequest createTrainerRequest){
@@ -44,10 +51,11 @@ public class TrainerService {
         trainer.setAvailablePeriod(createTrainerRequest.getAvailablePeriod());
         trainer.setCertification(createTrainerRequest.getCertification());
         trainer.setRating(createTrainerRequest.getRating());
+        trainer.setEmail(createTrainerRequest.getEmail());
         return trainerRepository.save(trainer);
     }
 
-    private static CustomPage<Trainer> getTrainerResponseCustomPage(List<Trainer> trainers, Page trainersPage, GetTrainerRequest request) {
+    private static CustomPage<Trainer> getTrainerResponseCustomPage(List<Trainer> trainers, Page trainersPage) {
         CustomPage<Trainer> customPage = new CustomPage<>();
         customPage.setContent(trainers);
         customPage.setPageNumber(trainersPage.getNumber() + 1);
@@ -67,6 +75,16 @@ public class TrainerService {
             throw new BadRequestException("Trainer not found");
         }
         return trainerOptional.get();
+    }
+
+    public void deleteTrainer(Long trainerId) throws BadRequestException {
+        Optional<Trainer> trainerOptional = trainerRepository.findById(trainerId);
+        if (trainerOptional.isEmpty()) {
+            throw new BadRequestException("Trainer not found");
+        }
+        Trainer trainer = trainerOptional.get();
+        trainer.setStatus("Inactive");
+        trainerRepository.save(trainer);
     }
 
     public List<Trainer> getTrainerRecommendation(){

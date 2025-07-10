@@ -3,6 +3,9 @@ package com.aktive.gym.model;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
+
+import java.util.Date;
 
 @Table(name = "trainer")
 @Entity
@@ -26,5 +29,11 @@ public class Trainer {
     private String availablePeriod;
     private String certification;
     private double rating;
+    private String status = "Active";
+    private String email;
+
+    @CreationTimestamp
+    @Column(updatable = false, name = "created_at")
+    private Date createdAt;
 
 }

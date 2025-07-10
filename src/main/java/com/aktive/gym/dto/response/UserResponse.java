@@ -21,5 +21,6 @@ public class UserResponse {
     private Date dateJoined;
     private CommonConstants.Gender gender;
     private Long age;
+    private TrainerResponse trainer;
     private String status = "Active";
 }
