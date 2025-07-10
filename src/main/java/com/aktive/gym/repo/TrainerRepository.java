@@ -15,8 +15,9 @@ public interface TrainerRepository extends JpaRepository<Trainer, Long> {
     @Query("SELECT t FROM Trainer t " +
             "WHERE (t.status = 'Active' OR t.status IS NULL) " +
             "AND (:searchQuery IS NULL OR " +
-            "     LOWER(t.fullName) LIKE LOWER(CONCAT('%', :searchQuery, '%')) OR " +
-            "     LOWER(t.role) LIKE LOWER(CONCAT('%', :searchQuery, '%'))) " +
+            "     (t.fullName LIKE %:searchQuery%) OR " +
+            "     (t.role LIKE %:searchQuery%)" +
+            ") " +
             "AND (" +
             "     :category = 'ALL' OR " +
             "     (:category = 'NEW' AND t.createdAt >= :cutoffDate) OR " +
@@ -26,6 +27,7 @@ public interface TrainerRepository extends JpaRepository<Trainer, Long> {
                                  @Param("category") String category,
                                  @Param("cutoffDate") Date cutoffDate,
                                  Pageable pageable);
+
 
     @Query("SELECT t FROM Trainer t  ORDER BY RANDOM() LIMIT 5")
     List<Trainer> searchRandomTrainers();
