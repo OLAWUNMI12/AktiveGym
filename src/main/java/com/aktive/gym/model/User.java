@@ -51,7 +51,7 @@ public class User implements UserDetails {
     private CommonConstants.MembershipPlan membershipPlan;
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false, name = "user_role")
+    @Column( name = "user_role")
     private CommonConstants.UserRole userRole = CommonConstants.UserRole.MEMBER;
 
     @OneToOne(cascade = CascadeType.ALL)
