@@ -194,9 +194,9 @@
 
 
 -- Admin user
-insert into fitness_and_body_info (id, bmi, height, weight, fitness_goal, dietary_preference)
-values
-(300, 23.02, 1.75, 70.5, 'LOOSE_WEIGHT,BUILD_MUSCLE', 'VEGAN');
+--insert into fitness_and_body_info (id, bmi, height, weight, fitness_goal, dietary_preference)
+--values
+--(300, 23.02, 1.75, 70.5, 'LOOSE_WEIGHT,BUILD_MUSCLE', 'VEGAN');
 
 
 insert into users (id, age , created_at, email, full_name, gender, membership_id, membership_plan, password, status, updated_at, user_role, fitness_and_body_info_id)
