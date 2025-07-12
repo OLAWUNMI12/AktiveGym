@@ -199,8 +199,8 @@
 --(300, 23.02, 1.75, 70.5, 'LOOSE_WEIGHT,BUILD_MUSCLE', 'VEGAN');
 
 
-insert into users (id, age , created_at, email, full_name, gender, membership_id, membership_plan, password, status, updated_at, user_role, fitness_and_body_info_id)
-values
-(300, 28, '2025-07-12 09:33:47.771', 'adminUser@gmail.com', 'Admin user',	'MALE', 'AKG13567',	'PREMIUM', '$2a$10$IOxE4o1swMxX5P7PGXkj7.LIqiwJRysvyIs6c38RneNnh7i3Ffuum', 'Active', '2025-07-12 09:33:47.771', 'ADMIN', 300);
+--insert into users (id, age , created_at, email, full_name, gender, membership_id, membership_plan, password, status, updated_at, user_role, fitness_and_body_info_id)
+--values
+--(300, 28, '2025-07-12 09:33:47.771', 'adminUser@gmail.com', 'Admin user',	'MALE', 'AKG13567',	'PREMIUM', '$2a$10$IOxE4o1swMxX5P7PGXkj7.LIqiwJRysvyIs6c38RneNnh7i3Ffuum', 'Active', '2025-07-12 09:33:47.771', 'ADMIN', 300);
 
 
