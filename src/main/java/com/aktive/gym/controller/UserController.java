@@ -34,6 +34,7 @@ public class UserController {
                 .membershipId(registeredUser.getMembershipId())
                 .membershipPlan(registeredUser.getMembershipPlan())
                 .gender(user.getGender())
+                .userRole(user.getUserRole())
                 .age(user.getAge())
                 .weight(user.getFitnessAndBodyInfo().getWeight())
                 .height(user.getFitnessAndBodyInfo().getHeight())

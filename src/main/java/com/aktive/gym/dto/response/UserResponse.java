@@ -22,5 +22,6 @@ public class UserResponse {
     private CommonConstants.Gender gender;
     private Long age;
     private TrainerResponse trainer;
+    private CommonConstants.UserRole userRole;
     private String status = "Active";
 }

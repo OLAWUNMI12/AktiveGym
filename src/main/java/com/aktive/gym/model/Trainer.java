@@ -1,6 +1,7 @@
 package com.aktive.gym.model;
 
 
+import io.micrometer.common.util.StringUtils;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -35,5 +36,13 @@ public class Trainer {
     @CreationTimestamp
     @Column(updatable = false, name = "created_at")
     private Date createdAt;
+
+
+    @PrePersist
+    public void prePersist() {
+        if (StringUtils.isBlank(status)) {
+            status = "Active";
+        }
+    }
 
 }

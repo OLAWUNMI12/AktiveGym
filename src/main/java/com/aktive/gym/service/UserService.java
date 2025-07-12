@@ -60,15 +60,15 @@ public class UserService implements UserDetailsService {
             userResponse.setEmail(user.getEmail());
             userResponse.setDateJoined(user.getCreatedAt());
             userResponse.setGender(user.getGender());
+            userResponse.setUserRole(user.getUserRole());
             userResponse.setAge(user.getAge());
             userResponse.setStatus(user.getStatus());
             if(Objects.nonNull(user.getTrainer())) {
                 TrainerResponse trainerResponse = new TrainerResponse();
                 trainerResponse.setId(user.getTrainer().getId());
                 trainerResponse.setFullName(user.getTrainer().getFullName());
-                userResponse.setTrainer(trainerResponse);
                 trainerResponse.setRole(user.getTrainer().getRole());
-                usersResponses.add(userResponse);
+                userResponse.setTrainer(trainerResponse);
             }
             usersResponses.add(userResponse);
         }

@@ -15,6 +15,11 @@ public class CommonConstants {
         PREMIUM;
     }
 
+    public enum UserRole{
+        ADMIN,
+        MEMBER
+    }
+
     public enum FitnessGoal {
         LOOSE_WEIGHT,
         BUILD_MUSCLE,

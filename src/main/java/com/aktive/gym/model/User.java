@@ -2,6 +2,7 @@ package com.aktive.gym.model;
 
 
 import com.aktive.gym.util.constants.CommonConstants;
+import io.micrometer.common.util.StringUtils;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -49,6 +50,10 @@ public class User implements UserDetails {
     @Column(nullable = false, name = "membership_plan")
     private CommonConstants.MembershipPlan membershipPlan;
 
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false, name = "user_role")
+    private CommonConstants.UserRole userRole = CommonConstants.UserRole.MEMBER;
+
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "fitness_and_body_info_id")
     private FitnessAndBodyInfo fitnessAndBodyInfo;
@@ -58,7 +63,7 @@ public class User implements UserDetails {
     @JoinColumn(name = "payment_info_id")
     private PaymentInfo paymentInfo;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "trainer_id")
     private Trainer trainer;
 
@@ -101,5 +106,15 @@ public class User implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+
+
+    @PrePersist
+    public void prePersist() {
+        if (StringUtils.isBlank(status)) {
+            status = "Active";
+            userRole = CommonConstants.UserRole.MEMBER;
+        }
     }
 }

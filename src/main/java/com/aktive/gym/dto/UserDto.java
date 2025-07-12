@@ -36,6 +36,8 @@ public class UserDto {
 
     private String fitnessGoal;
 
+    private CommonConstants.UserRole userRole;
+
     private CommonConstants.DietaryPreference dietaryPreference;
 
     private Trainer trainer;
