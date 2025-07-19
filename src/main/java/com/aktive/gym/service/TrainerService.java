@@ -21,6 +21,7 @@ import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 
 @Service
 @RequiredArgsConstructor
@@ -52,6 +53,7 @@ public class TrainerService {
         trainer.setCertification(createTrainerRequest.getCertification());
         trainer.setRating(createTrainerRequest.getRating());
         trainer.setEmail(createTrainerRequest.getEmail());
+        trainer.setRating(generateTrainerRating());
         return trainerRepository.save(trainer);
     }
 
@@ -98,5 +100,14 @@ public class TrainerService {
         User user = userRepository.findById(currentUser.getId()).orElseThrow(() -> new EntityNotFoundException("User not found"));
         user.setTrainer(trainer);
         userRepository.save(user);
+    }
+
+
+    public double generateTrainerRating(){
+        Random random = new Random();
+        int min = 41;
+        int max = 50;
+        int randomInt = random.nextInt((max - min) + 1) + min;
+        return randomInt / 10.0;
     }
 }

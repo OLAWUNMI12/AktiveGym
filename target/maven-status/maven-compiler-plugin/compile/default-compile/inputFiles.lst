@@ -19,6 +19,7 @@
 /Users/moshood.aniya/Documents/AktiveGym/src/main/java/com/aktive/gym/dto/request/LoginRequest.java
 /Users/moshood.aniya/Documents/AktiveGym/src/main/java/com/aktive/gym/dto/request/PaymentInfoRequest.java
 /Users/moshood.aniya/Documents/AktiveGym/src/main/java/com/aktive/gym/dto/request/RegisterUserRequest.java
+/Users/moshood.aniya/Documents/AktiveGym/src/main/java/com/aktive/gym/dto/request/UserEmailRequest.java
 /Users/moshood.aniya/Documents/AktiveGym/src/main/java/com/aktive/gym/dto/response/ComputeWorkoutProgressResponse.java
 /Users/moshood.aniya/Documents/AktiveGym/src/main/java/com/aktive/gym/dto/response/ExerciseResponse.java
 /Users/moshood.aniya/Documents/AktiveGym/src/main/java/com/aktive/gym/dto/response/LoginResponse.java

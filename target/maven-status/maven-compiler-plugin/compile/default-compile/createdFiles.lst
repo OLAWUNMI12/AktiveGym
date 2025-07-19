@@ -12,6 +12,7 @@ com/aktive/gym/dto/response/ExerciseResponse$UpperBodyStretchWorkoutDto$UpperBod
 com/aktive/gym/model/User.class
 com/aktive/gym/validator/ValidFitnessGoal.class
 com/aktive/gym/dto/response/ExerciseResponse$fullLegWorkoutDto$fullLegWorkoutDtoBuilder.class
+com/aktive/gym/dto/request/UserEmailRequest$UserEmailRequestBuilder.class
 com/aktive/gym/util/constants/CommonConstants$FoodType.class
 com/aktive/gym/service/pagination/CustomPage$CustomPageBuilder.class
 com/aktive/gym/service/EmailService.class
@@ -67,6 +68,7 @@ com/aktive/gym/dto/response/UserDashboardResponse.class
 com/aktive/gym/dto/request/RegisterUserRequest.class
 com/aktive/gym/dto/request/PaymentInfoRequest.class
 com/aktive/gym/repo/UserExerciseRepository.class
+com/aktive/gym/dto/request/UserEmailRequest.class
 com/aktive/gym/dto/response/UserResponse$UserResponseBuilder.class
 com/aktive/gym/dto/response/TrainerResponse$TrainerResponseBuilder.class
 com/aktive/gym/dto/response/ExerciseResponse$UpperBodyStretchWorkoutDto.class

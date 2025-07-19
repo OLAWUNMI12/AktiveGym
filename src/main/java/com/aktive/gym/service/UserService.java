@@ -2,15 +2,19 @@ package com.aktive.gym.service;
 
 
 import com.aktive.gym.dto.request.GetUsersRequest;
+import com.aktive.gym.dto.request.UserEmailRequest;
 import com.aktive.gym.dto.response.TrainerResponse;
 import com.aktive.gym.dto.response.UserResponse;
 import com.aktive.gym.model.User;
 import com.aktive.gym.repo.UserRepository;
 import com.aktive.gym.service.pagination.CustomPage;
+import jakarta.mail.MessagingException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -19,16 +23,19 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class UserService implements UserDetailsService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private  EmailService emailService;
+
+    @Value("${login.url}")
+    private String loginUrl;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -48,6 +55,23 @@ public class UserService implements UserDetailsService {
         Pageable pageable = PageRequest.of(getUsersRequest.getPageNumber() - 1, getUsersRequest.getPageSize());
         Page<User> users  = userRepository.searchUsers(StringUtils.hasText(getUsersRequest.getSearchQuery()) ? getUsersRequest.getSearchQuery() : "", pageable);
         return getUserResponseCustomPage(users.getContent(), users, getUsersRequest);
+    }
+
+
+    public void sendUserCustomEmail(UserEmailRequest userEmailRequest){
+        int pageNumber = 0;
+        Page<User> page;
+
+        do {
+            Pageable pageable = PageRequest.of(pageNumber, 20);
+            page = userRepository.findAll(pageable);
+
+            for (User user : page.getContent()) {
+                sendUserEmail(user, userEmailRequest.getMessage(), userEmailRequest.getSubject());
+            }
+
+            pageNumber++;
+        } while (!page.isLast());
     }
 
 
@@ -85,6 +109,24 @@ public class UserService implements UserDetailsService {
         return customPage;
 
         }
+
+
+
+
+    private void sendUserEmail(User user, String message, String subject) {
+        Map<String, Object> params = new HashMap<>();
+        params.put("fullName", user.getFullName());
+        params.put("message", message);
+        params.put("loginUrl", loginUrl);
+
+        try {
+            emailService.sendMail(user.getEmail(), subject, params, "customTemplate");
+        } catch (MessagingException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
 
 
 }
