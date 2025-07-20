@@ -34,4 +34,20 @@ public class DietaryPlan {
     private int protein;
     private int fat;
 
+
+    @Column(nullable = true)
+    private String direction;
+    @Column(nullable = true)
+    private String ingredient;
+    @Column(nullable = true)
+    private String tools;
+    @Column(nullable = true)
+    private String note;
+    @Column(nullable = true)
+    private int prepTime;
+    @Column(nullable = true)
+    private int cookTime;
+    @Column(nullable = true)
+    private String healthScore;
+
 }
