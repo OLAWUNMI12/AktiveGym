@@ -5,7 +5,9 @@ import com.aktive.gym.dto.request.GetUsersRequest;
 import com.aktive.gym.dto.request.UserEmailRequest;
 import com.aktive.gym.dto.response.TrainerResponse;
 import com.aktive.gym.dto.response.UserResponse;
+import com.aktive.gym.model.Notification;
 import com.aktive.gym.model.User;
+import com.aktive.gym.repo.NotificationRepository;
 import com.aktive.gym.repo.UserRepository;
 import com.aktive.gym.service.pagination.CustomPage;
 import jakarta.mail.MessagingException;
@@ -33,6 +35,9 @@ public class UserService implements UserDetailsService {
 
     @Autowired
     private  EmailService emailService;
+
+    @Autowired
+    private  NotificationRepository notificationRepository;
 
     @Value("${login.url}")
     private String loginUrl;
@@ -72,6 +77,13 @@ public class UserService implements UserDetailsService {
 
             pageNumber++;
         } while (!page.isLast());
+
+        Notification notification = Notification.builder()
+                .message(userEmailRequest.getMessage())
+                .subject(userEmailRequest.getSubject())
+                .createdAt(new Date())
+                .build();
+        notificationRepository.save(notification);
     }
 
 

@@ -7,6 +7,7 @@
 /Users/moshood.aniya/Documents/AktiveGym/src/main/java/com/aktive/gym/controller/AuthenticationController.java
 /Users/moshood.aniya/Documents/AktiveGym/src/main/java/com/aktive/gym/controller/DashboardController.java
 /Users/moshood.aniya/Documents/AktiveGym/src/main/java/com/aktive/gym/controller/DietaryPlanController.java
+/Users/moshood.aniya/Documents/AktiveGym/src/main/java/com/aktive/gym/controller/NotificationController.java
 /Users/moshood.aniya/Documents/AktiveGym/src/main/java/com/aktive/gym/controller/TrainersController.java
 /Users/moshood.aniya/Documents/AktiveGym/src/main/java/com/aktive/gym/controller/UserController.java
 /Users/moshood.aniya/Documents/AktiveGym/src/main/java/com/aktive/gym/controller/WorkoutController.java
@@ -17,6 +18,7 @@
 /Users/moshood.aniya/Documents/AktiveGym/src/main/java/com/aktive/gym/dto/request/GetTrainerRequest.java
 /Users/moshood.aniya/Documents/AktiveGym/src/main/java/com/aktive/gym/dto/request/GetUsersRequest.java
 /Users/moshood.aniya/Documents/AktiveGym/src/main/java/com/aktive/gym/dto/request/LoginRequest.java
+/Users/moshood.aniya/Documents/AktiveGym/src/main/java/com/aktive/gym/dto/request/Notificationfilter.java
 /Users/moshood.aniya/Documents/AktiveGym/src/main/java/com/aktive/gym/dto/request/PaymentInfoRequest.java
 /Users/moshood.aniya/Documents/AktiveGym/src/main/java/com/aktive/gym/dto/request/RegisterUserRequest.java
 /Users/moshood.aniya/Documents/AktiveGym/src/main/java/com/aktive/gym/dto/request/UserEmailRequest.java
@@ -29,11 +31,13 @@
 /Users/moshood.aniya/Documents/AktiveGym/src/main/java/com/aktive/gym/exception/GlobalExceptionHandler.java
 /Users/moshood.aniya/Documents/AktiveGym/src/main/java/com/aktive/gym/model/DietaryPlan.java
 /Users/moshood.aniya/Documents/AktiveGym/src/main/java/com/aktive/gym/model/FitnessAndBodyInfo.java
+/Users/moshood.aniya/Documents/AktiveGym/src/main/java/com/aktive/gym/model/Notification.java
 /Users/moshood.aniya/Documents/AktiveGym/src/main/java/com/aktive/gym/model/PaymentInfo.java
 /Users/moshood.aniya/Documents/AktiveGym/src/main/java/com/aktive/gym/model/Trainer.java
 /Users/moshood.aniya/Documents/AktiveGym/src/main/java/com/aktive/gym/model/User.java
 /Users/moshood.aniya/Documents/AktiveGym/src/main/java/com/aktive/gym/model/UserExercises.java
 /Users/moshood.aniya/Documents/AktiveGym/src/main/java/com/aktive/gym/repo/DietaryPlanRepository.java
+/Users/moshood.aniya/Documents/AktiveGym/src/main/java/com/aktive/gym/repo/NotificationRepository.java
 /Users/moshood.aniya/Documents/AktiveGym/src/main/java/com/aktive/gym/repo/TrainerRepository.java
 /Users/moshood.aniya/Documents/AktiveGym/src/main/java/com/aktive/gym/repo/UserExerciseRepository.java
 /Users/moshood.aniya/Documents/AktiveGym/src/main/java/com/aktive/gym/repo/UserRepository.java
@@ -41,6 +45,7 @@
 /Users/moshood.aniya/Documents/AktiveGym/src/main/java/com/aktive/gym/service/DashBoardService.java
 /Users/moshood.aniya/Documents/AktiveGym/src/main/java/com/aktive/gym/service/DietaryPlanService.java
 /Users/moshood.aniya/Documents/AktiveGym/src/main/java/com/aktive/gym/service/EmailService.java
+/Users/moshood.aniya/Documents/AktiveGym/src/main/java/com/aktive/gym/service/NotificationService.java
 /Users/moshood.aniya/Documents/AktiveGym/src/main/java/com/aktive/gym/service/TokenBlacklistService.java
 /Users/moshood.aniya/Documents/AktiveGym/src/main/java/com/aktive/gym/service/TrainerService.java
 /Users/moshood.aniya/Documents/AktiveGym/src/main/java/com/aktive/gym/service/UserService.java

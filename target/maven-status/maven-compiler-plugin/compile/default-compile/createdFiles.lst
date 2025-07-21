@@ -1,7 +1,10 @@
 com/aktive/gym/dto/response/TrainerResponse.class
+com/aktive/gym/model/Notification.class
 com/aktive/gym/service/pagination/CustomPage.class
 com/aktive/gym/controller/AuthenticationController.class
 com/aktive/gym/service/TokenBlacklistService.class
+com/aktive/gym/model/Notification$NotificationBuilder.class
+com/aktive/gym/repo/NotificationRepository.class
 com/aktive/gym/dto/UserDto.class
 com/aktive/gym/validator/FitnessGoalValidator.class
 com/aktive/gym/config/WebSecurityConfig.class
@@ -9,6 +12,7 @@ com/aktive/gym/dto/request/CreateTrainerRequest.class
 com/aktive/gym/controller/DashboardController.class
 com/aktive/gym/dto/response/ExerciseResponse$CoreAndFatBurnWorkoutDto.class
 com/aktive/gym/dto/response/ExerciseResponse$UpperBodyStretchWorkoutDto$UpperBodyStretchWorkoutDtoBuilder.class
+com/aktive/gym/dto/request/Notificationfilter$NotificationfilterBuilder.class
 com/aktive/gym/model/User.class
 com/aktive/gym/validator/ValidFitnessGoal.class
 com/aktive/gym/dto/response/ExerciseResponse$fullLegWorkoutDto$fullLegWorkoutDtoBuilder.class
@@ -17,6 +21,7 @@ com/aktive/gym/util/constants/CommonConstants$FoodType.class
 com/aktive/gym/service/pagination/CustomPage$CustomPageBuilder.class
 com/aktive/gym/service/EmailService.class
 com/aktive/gym/config/AuthEntryPointJwt.class
+com/aktive/gym/dto/request/Notificationfilter.class
 com/aktive/gym/util/constants/CommonConstants$MembershipPlan.class
 com/aktive/gym/dto/request/FitnessAndBodyInfoRequest.class
 com/aktive/gym/util/constants/CommonConstants$Excercises.class
@@ -57,6 +62,7 @@ com/aktive/gym/util/constants/CommonConstants$FitnessGoal.class
 com/aktive/gym/dto/response/LoginResponse$LoginResponseBuilder.class
 com/aktive/gym/controller/WorkoutController.class
 com/aktive/gym/service/WorkoutService$ExerciseMetricsResponse.class
+com/aktive/gym/service/NotificationService.class
 com/aktive/gym/dto/response/ExerciseResponse.class
 com/aktive/gym/model/UserExercises.class
 com/aktive/gym/controller/DietaryPlanController.class
@@ -85,6 +91,7 @@ com/aktive/gym/model/PaymentInfo.class
 com/aktive/gym/util/constants/CommonConstants$UserRole.class
 com/aktive/gym/dto/response/LoginResponse.class
 com/aktive/gym/config/JwtService.class
+com/aktive/gym/controller/NotificationController.class
 com/aktive/gym/dto/request/LoginRequest.class
 com/aktive/gym/config/AppConfig.class
 com/aktive/gym/model/FitnessAndBodyInfo.class
