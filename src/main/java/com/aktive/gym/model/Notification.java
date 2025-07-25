@@ -21,6 +21,7 @@ public class Notification {
 
     private String subject;
     private String message;
+    private String notificationType;
     private Date createdAt;
 
 }

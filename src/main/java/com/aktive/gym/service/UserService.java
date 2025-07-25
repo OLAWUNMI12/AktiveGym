@@ -16,7 +16,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -81,6 +80,7 @@ public class UserService implements UserDetailsService {
         Notification notification = Notification.builder()
                 .message(userEmailRequest.getMessage())
                 .subject(userEmailRequest.getSubject())
+                .notificationType(userEmailRequest.getNotificationType())
                 .createdAt(new Date())
                 .build();
         notificationRepository.save(notification);

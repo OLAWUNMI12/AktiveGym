@@ -16,6 +16,9 @@ public class UserEmailRequest {
     @NotBlank(message = "Message is mandatory")
     private String message;
 
+    @NotBlank(message = "Message is mandatory")
+    private String notificationType;
+
     @NotBlank(message = "Subject is mandatory")
     private String subject;
 
