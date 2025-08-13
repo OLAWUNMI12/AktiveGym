@@ -12,7 +12,7 @@ import lombok.*;
 @AllArgsConstructor
 public class PaymentInfo {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false)
     private Integer id;
 
